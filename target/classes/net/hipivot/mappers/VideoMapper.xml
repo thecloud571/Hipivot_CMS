@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.hipivot.dao.VideoDao">
+	
+	<resultMap type="video" id="VideoResult">
+		<id property="uuid" column="uid"/>
+		<association property="detail" javaType="Video_Detail">
+			<result property="name" column="name"/>
+			<result property="desc" column="desc"/>
+		</association>
+		<association property="info" javaType="Video_Info">
+			<result property="length" column="length"/>
+			<result property="size" column="size"/>
+		</association>
+		<association property="sort" javaType="Video_Sort">
+			<result property="pubDate" column="pubDate"/>
+			<result property="playTimes" column="playTimes"/>
+			<result property="downloadTimes" column="downloadTimes"/>
+			<result property="recom" column="recom"/>
+		</association>
+		<association property="url" javaType="Video_Url">
+			<result property="horizontalUrl" column="horizontalUrl"/>
+			<result property="verticalUrl" column="verticalUrl"/>
+			<result property="defaultPlayUrl" column="defaultPlayUrl"/>
+			<result property="mediumPlayUrl" column="mediumPlayUrl"/>
+			<result property="highPlayUrl" column="highPlayUrl"/>
+			<result property="defaultDownloadUrl" column="defaultDownloadUrl"/>
+			<result property="mediumDownloadUrl" column="mediumDownloadUrl"/>
+			<result property="highDownloadUrl" column="highDownloadUrl"/>
+		</association>
+	</resultMap>
+
+	
+	<select id="videoList" parameterType="Map" resultMap="VideoResult">
+		<choose>
+			<when test="source=='local'">
+				SELECT 
+				  sort.uid,
+				  detail_cn.name,
+				  detail_cn.desc,
+				  info.length,
+				  info.size,
+				  sort.pubDate,
+				  sort.playTimes,
+				  sort.downloadTimes,
+				  sort.recom,
+				  url.horizontalUrl,
+				  url.verticalUrl,
+				  url.defaultPlayUrl,
+				  url.mediumPlayUrl,
+				  url.highPlayUrl,
+				  url.defaultDownloadUrl,
+				  url.mediumDownloadUrl,
+				  url.highDownloadUrl 
+				FROM
+				  ct_video_local_sort sort 
+				  LEFT JOIN ct_video_local_detail_cn detail_cn 
+				    ON detail_cn.uid = sort.uid 
+				  LEFT JOIN ct_video_local_info info 
+				    ON info.uid = sort.uid 
+				  LEFT JOIN ct_video_local_url url 
+				    ON url.uid = sort.uid 
+			</when>
+			<when test="source=='remote'">
+				SELECT 
+				  sort.uid,
+				  detail_cn.name,
+				  detail_cn.desc,
+				  info.length,
+				  info.size,
+				  sort.pubDate,
+				  sort.playTimes,
+				  sort.downloadTimes,
+				  sort.recom,
+				  url.horizontalUrl,
+				  url.verticalUrl,
+				  url.defaultPlayUrl,
+				  url.mediumPlayUrl,
+				  url.highPlayUrl,
+				  url.defaultDownloadUrl,
+				  url.mediumDownloadUrl,
+				  url.highDownloadUrl 
+				FROM
+				  ct_video_remote_sort sort 
+				  LEFT JOIN ct_video_remote_detail_cn detail_cn 
+				    ON detail_cn.uid = sort.uid 
+				  LEFT JOIN ct_video_remote_info info 
+				    ON info.uid = sort.uid 
+				  LEFT JOIN ct_video_remote_url url 
+				    ON url.uid = sort.uid 
+			</when>
+			<otherwise>
+				SELECT 
+				  sort.uid,
+				  detail_cn.name,
+				  detail_cn.desc,
+				  info.length,
+				  info.size,
+				  sort.pubDate,
+				  sort.playTimes,
+				  sort.downloadTimes,
+				  sort.recom,
+				  url.horizontalUrl,
+				  url.verticalUrl,
+				  url.defaultPlayUrl,
+				  url.mediumPlayUrl,
+				  url.highPlayUrl,
+				  url.defaultDownloadUrl,
+				  url.mediumDownloadUrl,
+				  url.highDownloadUrl 
+				FROM
+				  ct_video_local_sort sort 
+				  LEFT JOIN ct_video_local_detail_cn detail_cn 
+				    ON detail_cn.uid = sort.uid 
+				  LEFT JOIN ct_video_local_info info 
+				    ON info.uid = sort.uid 
+				  LEFT JOIN ct_video_local_url url 
+				    ON url.uid = sort.uid 
+				UNION
+				SELECT 
+				  sort.uid,
+				  detail_cn.name,
+				  detail_cn.desc,
+				  info.length,
+				  info.size,
+				  sort.pubDate,
+				  sort.playTimes,
+				  sort.downloadTimes,
+				  sort.recom,
+				  url.horizontalUrl,
+				  url.verticalUrl,
+				  url.defaultPlayUrl,
+				  url.mediumPlayUrl,
+				  url.highPlayUrl,
+				  url.defaultDownloadUrl,
+				  url.mediumDownloadUrl,
+				  url.highDownloadUrl 
+				FROM
+				  ct_video_remote_sort sort 
+				  LEFT JOIN ct_video_remote_detail_cn detail_cn 
+				    ON detail_cn.uid = sort.uid 
+				  LEFT JOIN ct_video_remote_info info 
+				    ON info.uid = sort.uid 
+				  LEFT JOIN ct_video_remote_url url 
+				    ON url.uid = sort.uid 
+			</otherwise>
+		</choose>
+		limit #{start},#{size}
+	</select>
+	
+	<select id="videoTotal" parameterType="Map" resultType="Integer">
+		<choose>
+			<when test="source=='local'">
+				SELECT 
+				  COUNT(uid) 
+				FROM
+				  ct_video_local_detail_cn 
+			</when>
+			<when test="source=='remote'">
+				SELECT 
+				  COUNT(uid) 
+				FROM
+				  ct_video_remote_detail_cn 
+			</when>
+			<otherwise>
+				SELECT 
+				  COUNT(uid) 
+				FROM
+				  (
+				    (SELECT 
+				      uid 
+				    FROM
+				      ct_video_local_detail_cn) 
+				    UNION
+				    ALL 
+				    (SELECT 
+				      uid 
+				    FROM
+				      ct_video_remote_detail_cn)
+				  ) AS total 
+			</otherwise>
+		</choose>
+	</select>
+	
+</mapper> 

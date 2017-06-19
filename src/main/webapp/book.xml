@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Video>
+	<detail>
+		<name>12345</name>
+		<desc>12345</desc>
+	</detail>
+	<info>
+		<length>12345</length>
+		<size>12345</size>
+	</info>
+	<sort>
+		<pubDate>12345</pubDate>
+		<playTimes>12345</playTimes>
+		<downloadTimes>12345</downloadTimes>
+		<recom>12345</recom>
+	</sort>
+	<url>
+		<horizontalUrl>12345</horizontalUrl>
+		<verticalUrl>12345</verticalUrl>
+		<defaultPlayUrl>12345</defaultPlayUrl>
+		<mediumPlayUrl>12345</mediumPlayUrl>
+		<highPlayUrl>12345</highPlayUrl>
+		<defaultDownloadUrl>12345</defaultDownloadUrl>
+		<mediumDownloadUrl>12345</mediumDownloadUrl>
+		<highDownloadUrl>12345</highDownloadUrl>
+	</url>
+</Video>

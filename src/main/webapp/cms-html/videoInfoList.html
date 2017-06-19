@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css"
+	href="../static/jquery-easyui-1.5.2/themes/bootstrap/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="../static/jquery-easyui-1.5.2/themes/icon.css">
+<script type="text/javascript"
+	src="../static/jquery-easyui-1.5.2/jquery.min.js"></script>
+<script type="text/javascript"
+	src="../static/jquery-easyui-1.5.2/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+	src="../static/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js"></script>
+<style type="text/css">
+* {
+	margin: 0;
+	border: 0;
+	padding: 0;
+}
+</style>
+</head>
+<body>
+	<table title="视频信息列表" class="easyui-datagrid"
+		data-options="fit:true,pagination:true,rownumbers:true,fitColumns:false,striped:true,iconCls:'video_camera_16',toolbar:'#tb',url:'../video/list.do?source='">
+		<thead>
+			<tr>
+				<th field="cb" checkbox="true" />
+				<th field="detail.name" width="20%" align="center" formatter="formatName">视频名称</th>
+				<th field="detail.type" width="15%" align="center" formatter="formatType">视频类型</th>
+				<th field="detail.subtitle" width="25%" align="center" formatter="formatSubtitle">视频摘要</th>
+				<th field="sort.playTime" width="10%" align="center" formatter="formatPlayTime">播放次数</th>
+				<th field="sort.downloadTime" width="10%" align="center" formatter="formatDownloadTime">下载次数</th>
+				<th field="sort.pubDate" width="15%" align="center" formatter="formatPubDate">发布时间</th>
+			</tr>
+		</thead>
+	</table>
+</body>
+</html>
+<script type="text/javascript">
+	function formatName(val, row) {
+		return row.detail.name;
+	}
+
+	function formatType(val, row) {
+		return row.detail.name;
+	}
+
+	function formatSubtitle(val, row) {
+		return row.detail.name;
+	}
+
+	function formatPlayTime(val, row) {
+		return row.sort.playTimes;
+	}
+
+	function formatDownloadTime(val, row) {
+		return row.sort.downloadTimes;
+	}
+
+	function formatPubDate(val, row) {
+		return row.sort.pubDate;
+	}
+</script>
